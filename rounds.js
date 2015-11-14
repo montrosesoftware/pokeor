@@ -22,7 +22,7 @@ Rounds.helpers({
   getCards: function(numberOfCards){
   	var cards = [];
   	for(var i = 0; i < numberOfCards; i++){
-  		cards.push(this.shuffledDeck.shift());
+  		cards.push(this.shiftCard());
   	}
   	return cards;
   },
@@ -40,13 +40,14 @@ Rounds.helpers({
   	Rounds.update({_id:this._id}, {
   		$set:{ shuffledDeck: this.shuffledDeck }
   	});
+  	return card;
   },
 
   zeroDeal: function (players){
   	var hands = this.getHands(players);
   	Rounds.update({_id:this._id}, {
   	  $set:{hands:hands},
-      $addToSet: {
+      $push: {
         deals: {
           cards: [],
           bets: [],
@@ -58,7 +59,7 @@ Rounds.helpers({
 
   firstDeal: function (){
   	Rounds.update({_id:this._id}, {
-      $addToSet: {
+      $push: {
         deals: {
           cards: this.getCards(3),
           bets: [],
@@ -70,7 +71,7 @@ Rounds.helpers({
 
   secondDeal: function (){
   	Rounds.update({_id:this._id}, {
-      $addToSet: {
+      $push: {
         deals: {
           cards: this.getCards(1),
           bets: [],
@@ -81,8 +82,9 @@ Rounds.helpers({
   },
 
   thirdDeal: function (){
+  	console.log("3deal");
   	Rounds.update({_id:this._id}, {
-      $addToSet: {
+      $push: {
         deals: {
           cards: this.getCards(1),
           bets: [],
