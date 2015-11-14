@@ -5,8 +5,11 @@ Games.helpers({
     return Rounds.findOne(this.currentRoundId);
   },
   addPlayer: function(name) {
-    Games.update({_id:this._id}, {$addToSet: {players: name}});
-    this.tryStartGame();
+  	var id = this._id;
+    Games.update({_id:this._id}, {$addToSet: {players: name}}, function(){
+	  var game = Games.findOne({_id:id});
+	  game.tryStartGame();
+    });
   },
   init: function() {
   	console.log("init");
