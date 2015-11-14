@@ -36,7 +36,6 @@ Games.helpers({
   tryStartGame: function(){
     if(this.players.length >= 3){
       this.init();
-      console.log(this);
     }
   },
   isStarted: function() {
@@ -60,6 +59,13 @@ Games.helpers({
   		hands.push({player: player, hand: hand});
   	})
   	return hands;
+  },
+  currentPlayer: function() {
+    if (this.currentRound() && this.currentRound().currentDeal()) {
+      return this.currentRound().currentDeal().currentPlayer;
+    } else {
+      return null;
+    }
   }
 });
 
@@ -68,3 +74,4 @@ _.extend(Games, {
     return Games.findOne({isCreated:true});
   }
 });
+

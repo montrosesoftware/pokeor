@@ -9,7 +9,7 @@ if (Meteor.isClient) {
 
   Template.body.helpers({
     isGameStarted: function() {
-      var game = Games.findOne({isCreated:true});
+      var game = Games.current();
       if (game) {
         return game.isStarted();
       } else {

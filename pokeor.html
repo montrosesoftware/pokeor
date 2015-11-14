@@ -3,10 +3,14 @@
 </head>
 
 <body>
-  {{#unless isGameStarted}}
-    <h1>Welcome to Pokeor!</h1>
-    {{> joinGame}}
+  {{#if Template.subscriptionsReady}}
+    {{#unless isGameStarted}}
+      <h1>Welcome to Pokeor!</h1>
+      {{> joinGame}}
+    {{else}}
+      {{> game}}
+    {{/unless}}
   {{else}}
-    {{> game}}
-  {{/unless}}
+    Loading...
+  {{/if}}
 </body>

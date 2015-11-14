@@ -1,4 +1,28 @@
 <template name="game">
   <div id="players"><span>All players:</span></div>
   {{> cards}}
+  <div>
+    <span>Logged in as:</span>
+    <span>{{ playerInSession }}</span>
+  </div>
+  <div>
+    <span>All players:</span>
+    <span>{{ allPlayers }}</span>
+  </div>
+  <div>
+    <span>Current turn:</span>
+    <span>{{ currentPlayer }}</span>
+  </div>
+  {{> bet}}
 </template>
+
+<template name="bet">
+  <div id="bet">
+    {{#if isMyTurn}}
+      <span>BET!</span>
+    {{else}}
+      <span>Wait for your turn.</span>
+    {{/if}}
+  </div>
+</template>
+
