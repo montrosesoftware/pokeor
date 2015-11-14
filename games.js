@@ -12,16 +12,12 @@ Games.helpers({
     });
   },
   init: function() {
-  	var players = this.getPlayers();
   	var shuffledDeck = _.shuffle(DECK);
-  	var handSize = 2;
-  	var hands = this.getHands(players, shuffledDeck, handSize);
-
     var roundId = Rounds.insert({
       gameId: this._id,
       dealer: this.players[0],
       shuffledDeck: shuffledDeck,
-      hands: hands,
+      hands: [],
       deals: []
     });
 
@@ -30,7 +26,7 @@ Games.helpers({
       $set: {currentRoundId: roundId}
     }, function(){
       var game = Games.findOne({_id:id});
-      game.currentRound().nextDeal();
+      game.currentRound().zeroDeal(game.getPlayers());
     });
   },
   tryStartGame: function(){
@@ -43,22 +39,6 @@ Games.helpers({
   },
   getPlayers: function(){
   	return Games.findOne({_id:this._id}).players;
-  },
-  getCards: function(shuffled_deck, numberOfCards){
-  	var cards = [];
-  	for(var i = 0; i < numberOfCards; i++){
-  		cards.push(shuffled_deck.shift());
-  	}
-  	return cards;
-  },
-  getHands: function(players, shuffledDeck, handSize){
-  	var hands = [];
-  	var that = this;
-  	players.forEach(function(player){
-  		var hand = that.getCards(shuffledDeck, 2);
-  		hands.push({player: player, hand: hand});
-  	})
-  	return hands;
   },
   currentPlayer: function() {
     if (this.currentRound() && this.currentRound().currentDeal()) {
