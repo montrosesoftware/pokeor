@@ -1,5 +1,3 @@
-var DECK;
-
 if (Meteor.isClient) {
   Template.joinGame.helpers({
     isGameCreated: function () {
@@ -25,16 +23,9 @@ if (Meteor.isClient) {
       Session.set("player", name);
     }
   });
-}
+  DECK = generateDeck();
 
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-    DECK = generateDeck();
-  });
-
-  var generateDeck = function () {
+  function generateDeck() {
     var figures = 13;
     var suites = 4;  
     
@@ -42,15 +33,15 @@ if (Meteor.isServer) {
     for (var i = 0; i < figures; i++) {
         for(var j = 0; j < suites; j++){
           var n = suites*i + j;
-          cards[n] = {figure: i, suite: j, inUse: false};
+          cards[n] = {figure: i, suite: j};
         }
     }
-  return cards;
-  }
-
-  var deal = function (){
-
+    return cards;
   }
 }
 
-
+if (Meteor.isServer) {
+  Meteor.startup(function () {
+    // code to run on server at startup
+  }); 
+}
