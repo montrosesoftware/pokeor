@@ -1,8 +1,17 @@
 <template name="cards">
+<h4>Table:</h4>
+<h3>
+	{{#each tableCards}}
+	  <span>[{{figure}}, {{suite}}]</span>
+	{{/each}}
+</h3>
+
 <h3>Your cards:</h3>
   <h2>
     {{#each cards}}
       <span>[{{figure}}, {{suite}}]</span>
     {{/each}}
   </h2>
+
+  <button id="next-deal">Next deal</button>
 </template>

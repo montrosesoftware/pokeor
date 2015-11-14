@@ -23,3 +23,5 @@ twbs:bootstrap
 underscore
 accounts-ui
 accounts-password
+accounts-facebook
+accounts-google
