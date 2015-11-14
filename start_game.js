@@ -1,3 +1,33 @@
+Meteor.methods({
+  createGame: function() {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if (Games.current()) {
+      throw new Meteor.Error("game already started");
+    }
+
+    Games.insert({
+      isCreated:true,
+      createdAt: new Date(),
+      createdBy: Meteor.user().username
+    });
+  },
+
+  joinGame: function() {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if (!Games.current()) {
+      throw new Meteor.Error("no game started");
+    }
+
+    Games.current().addPlayer(Meteor.user().username);
+  }
+});
+
 if (Meteor.isClient) {
   Template.joinGame.helpers({
     isGameCreated: function () {
@@ -10,34 +40,13 @@ if (Meteor.isClient) {
 
   Template.joinGame.events({
     'click #create-game': function () {
-      Games.insert({
-        isCreated:true,
-        createdAt: new Date()
-      });
+      Meteor.call("createGame");
     },
     'click #join-game': function (event) {
-      var game = Games.current();
-      game.addPlayer(Meteor.user().username);
+      Meteor.call("joinGame");
     }
   });
-
-  function generateDeck() {
-    var figures = 13;
-    var suites = 4;  
-    
-    var cards = [];      
-    for (var i = 0; i < figures; i++) {
-        for(var j = 0; j < suites; j++){
-          var n = suites*i + j;
-          cards[n] = {figure: i, suite: j};
-        }
-    }
-    return cards;
-  }
-  DECK = generateDeck();
 }
-DECK = generateDeck();
-
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
