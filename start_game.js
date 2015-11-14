@@ -23,7 +23,6 @@ if (Meteor.isClient) {
       Session.set("player", name);
     }
   });
-  DECK = generateDeck();
 
   function generateDeck() {
     var figures = 13;
@@ -38,6 +37,7 @@ if (Meteor.isClient) {
     }
     return cards;
   }
+  DECK = generateDeck();
 }
 
 if (Meteor.isServer) {
