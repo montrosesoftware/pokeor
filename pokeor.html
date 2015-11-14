@@ -3,27 +3,6 @@
 </head>
 
 <body>
-
-  <h1>Welcome to Pokeor!</h1>
-  
-{{> joinGame}}
-
-
+  <h1>Welcome to Pokeor!</h1> 
+ {{> joinGame}}
 </body>
-
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
-<template name="joinGame">
-	{{#if isGameStarted}}
-		<form id="join-game">
-	  		<input type="text" name="name" />
-	  		<input type="submit" value="Join" />
-	  	</form>
-	{{else}}
-		<button id="start-game">Start game!</button>
-	{{/if}}
-
-</template>

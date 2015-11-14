@@ -2,31 +2,33 @@ if (Meteor.isClient) {
 
 console.log("hello world");
 
-
   Template.joinGame.helpers({
     isGameStarted: function () {
-      return false;
+      console.log(Games.findOne({isStarted:true}));
+      return Games.findOne({isStarted:true})
     }
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+  Template.joinGame.events({
+    'click #start-game': function () {
+      Games.insert({
+        isStarted:true, 
+        startedAt: new Date()
+      })
+    },
+    'subimit .join-game': function (event) {
+      event.preventDefault();
+      var game = Games.findOne({isStarted:true});
+      var name = event.target.text.value;
+      game.addPlayer(name);
+      event.target.text.value = "";
     }
   });
 }
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
 }
-
-Games.helpers({
-  isStarted: function() {
-    
-    return Games.findOne({isStarted:true});
-
-  }
-});
