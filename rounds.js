@@ -5,6 +5,10 @@ Rounds.helpers({
     return Games.findOne(this.gameId);
   },
 
+  currentDeal: function() {
+    return _.last(this.deals);
+  },
+
   nextDeal: function() {
     Rounds.update({_id:this._id}, {
       $addToSet: {

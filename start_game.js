@@ -3,7 +3,7 @@ var DECK;
 if (Meteor.isClient) {
   Template.joinGame.helpers({
     isGameCreated: function () {
-      return Games.findOne({isCreated:true});
+      return Games.current();
     },
     playerInSession: function(){
       return Session.get("player");
@@ -19,7 +19,7 @@ if (Meteor.isClient) {
     },
     'submit #join-game': function (event) {
       event.preventDefault();
-      var game = Games.findOne({isCreated:true});
+      var game = Games.current();
       var name = event.target.name.value;
       game.addPlayer(name);
       Session.set("player", name);
