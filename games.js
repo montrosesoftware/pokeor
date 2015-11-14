@@ -1,5 +1,4 @@
 Games = new Mongo.Collection('games');
-Rounds = new Mongo.Collection('rounds');
 
 Games.helpers({
   currentRound: function() {
@@ -7,8 +6,3 @@ Games.helpers({
   }
 });
 
-Rounds.helpers({
-  game: function() {
-    return Games.findOne(this.gameId);
-  }
-});
