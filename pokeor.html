@@ -3,6 +3,10 @@
 </head>
 
 <body>
-  <h1>Welcome to Pokeor!</h1> 
- {{> joinGame}}
+  {{#unless isGameStarted}}
+    <h1>Welcome to Pokeor!</h1>
+    {{> joinGame}}
+  {{else}}
+    <h1>Game</h1>
+  {{/unless}}
 </body>

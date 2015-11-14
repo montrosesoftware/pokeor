@@ -12,8 +12,7 @@ Games.helpers({
     });
   },
   init: function() {
-  	console.log("init");
-    Rounds.insert({
+    var roundId = Rounds.insert({
       gameId: this._id,
       dealer: this.players[0],
       // Ace - 14, K - 13 etc.
@@ -23,14 +22,19 @@ Games.helpers({
         [{figure: 14, color: 2}, {figure: 2, color: 2}],
         [{figure: 14, color: 3}, {figure: 2, color: 3}],
         [{figure: 14, color: 4}, {figure: 2, color: 4}]
-      ]
+      ],
+    });
+    Games.update(this._id, {
+      $set: {currentRoundId: roundId}
     });
   },
-
-tryStartGame: function(){
-	if(this.players.length >= 4){
-		this.init();
-	}
-}
+  tryStartGame: function(){
+    if(this.players.length >= 4){
+      this.init();
+    }
+  },
+  isStarted: function() {
+    return this.currentRoundId !== undefined && this.currentRoundId !== null;
+  }
 });
 
