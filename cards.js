@@ -1,4 +1,23 @@
+Meteor.methods({
+  nextDeal: function() {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
 
+    if (!Games.current()) {
+      throw new Meteor.Error("no game started");
+    }
+
+    var currectRound = Games.current().currentRound();
+    if (!currectRound) {
+      throw new Meteor.Error("no round started");
+    }
+
+    if(currectRound){
+      currectRound.nextDeal();
+    }
+  }
+});
 
 if (Meteor.isClient) {
   Template.cards.helpers({
@@ -32,10 +51,7 @@ if (Meteor.isClient) {
 
   Template.cards.events({
       "click #next-deal": function(){
-        var currectRound = Games.current().currentRound();
-         if(currectRound){
-            currectRound.nextDeal();
-         }
+        Meteor.call("nextDeal");
       }
   });
 }
