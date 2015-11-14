@@ -16,12 +16,12 @@ console.log("hello world");
         startedAt: new Date()
       })
     },
-    'subimit .join-game': function (event) {
+    'submit #join-game': function (event) {
       event.preventDefault();
       var game = Games.findOne({isStarted:true});
-      var name = event.target.text.value;
+      var name = event.target.name.value;
       game.addPlayer(name);
-      event.target.text.value = "";
+      event.target.name.value = "";
     }
   });
 }

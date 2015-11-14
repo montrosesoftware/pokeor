@@ -5,7 +5,7 @@ Games.helpers({
     return Rounds.findOne(this.currentRoundId);
   },
   addPlayer: function(name) {
-    Games.update({_id:this._id}, {$addToSet: {players: name}})
+    Games.update({_id:this._id}, {$addToSet: {players: name}});
   },
   init: function() {
     Rounds.insert({
