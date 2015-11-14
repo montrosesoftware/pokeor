@@ -31,10 +31,13 @@ Games.helpers({
   tryStartGame: function(){
     if(this.players.length >= 4){
       this.init();
+      console.log(this);
     }
   },
   isStarted: function() {
     return this.currentRoundId !== undefined && this.currentRoundId !== null;
   }
 });
+
+
 

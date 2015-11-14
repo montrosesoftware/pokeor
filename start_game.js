@@ -29,6 +29,25 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
-
   });
+
+  var generateDeck = function () {
+    var figures = 13;
+    var suites = 4;  
+    
+    var cards = [];      
+    for (var i = 0; i < figures; i++) {
+        for(var j = 0; j < suites; j++){
+          var n = suites*i + j;
+          cards[n] = {figure: i, suite: j, inUse: false};
+        }
+    }
+  return cards;
+  }
+
+  var deal = function (){
+
+  }
 }
+
+
