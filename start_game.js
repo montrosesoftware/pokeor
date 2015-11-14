@@ -1,10 +1,12 @@
+var DECK;
+
 if (Meteor.isClient) {
   Template.joinGame.helpers({
     isGameCreated: function () {
       return Games.findOne({isCreated:true});
     },
     playerInSession: function(){
-      return playerInSession();
+      return Session.get("player");
     }
   });
 
@@ -29,6 +31,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+    DECK = generateDeck();
   });
 
   var generateDeck = function () {
