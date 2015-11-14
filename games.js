@@ -44,3 +44,9 @@ Games.helpers({
   }
 });
 
+_.extend(Games, {
+  current: function() {
+    return Games.findOne({isCreated:true});
+  }
+});
+

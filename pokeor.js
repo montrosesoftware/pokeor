@@ -1,4 +1,12 @@
 if (Meteor.isClient) {
+  playerInSession =  function(){
+    return Session.get("player");
+  };
+
+  Template.registerHelper('playerInSession', function() {
+    return playerInSession();
+  });
+
   Template.body.helpers({
     isGameStarted: function() {
       var game = Games.findOne({isCreated:true});
