@@ -7,8 +7,8 @@ Games.helpers({
   addPlayer: function(name) {
   	var id = this._id;
     Games.update({_id:this._id}, {$addToSet: {players: name}}, function(){
-	  var game = Games.findOne({_id:id});
-	  game.tryStartGame();
+      var game = Games.findOne({_id:id});
+      game.tryStartGame();
     });
   },
   init: function() {
@@ -23,13 +23,19 @@ Games.helpers({
         [{figure: 14, color: 3}, {figure: 2, color: 3}],
         [{figure: 14, color: 4}, {figure: 2, color: 4}]
       ],
+      deals: []
     });
+    var id = this._id;
     Games.update(this._id, {
       $set: {currentRoundId: roundId}
+    },
+    function(){
+      var game = Games.findOne({_id:id});
+      game.currentRound().nextDeal();
     });
   },
   tryStartGame: function(){
-    if(this.players.length >= 4){
+    if(this.players.length >= 3){
       this.init();
       console.log(this);
     }
@@ -39,5 +45,8 @@ Games.helpers({
   }
 });
 
-
-
+_.extend(Games, {
+  current: function() {
+    return Games.findOne({isCreated:true});
+  }
+});

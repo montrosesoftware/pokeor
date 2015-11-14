@@ -4,7 +4,7 @@ if (Meteor.isClient) {
       return Games.findOne({isCreated:true});
     },
     playerInSession: function(){
-      return Session.get("player");
+      return playerInSession();
     }
   });
 
