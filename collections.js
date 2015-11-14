@@ -1,15 +1,14 @@
 Games = new Mongo.Collection('games');
+Rounds = new Mongo.Collection('rounds');
 
-// Players = new Mongo.Collection('players');
+Games.helpers({
+  currentRound: function() {
+    return Rounds.findOne(this.currentRoundId);
+  }
+});
 
-// Players.helpers({
-//   game: function() {
-//     return Games.findOne(this.playerId);
-//   }
-// });
-
-// Games.helpers({
-//   players: function() {
-//     return Players.find({ gameId: this._id });
-//   }
-// });
+Rounds.helpers({
+  game: function() {
+    return Games.findOne(this.gameId);
+  }
+});
