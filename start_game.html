@@ -1,0 +1,10 @@
+<template name="joinGameTemplate2">
+	{{#if isGameStarted}}
+		<form id="join-game">
+	  		<input type="text" name="name" />
+	  		<input type="submit" value="Join" />
+	  	</form>
+	{{else}}
+		<button id="start-game">Start game!</button>
+	{{/if}}
+</template>
