@@ -2,6 +2,9 @@ if (Meteor.isClient) {
   Template.joinGame.helpers({
     isGameCreated: function () {
       return Games.findOne({isCreated:true});
+    },
+    playerInSession: function(){
+      return Session.get("player");
     }
   });
 
@@ -17,7 +20,7 @@ if (Meteor.isClient) {
       var game = Games.findOne({isCreated:true});
       var name = event.target.name.value;
       game.addPlayer(name);
-      event.target.name.value = "";
+      Session.set("player", name);
     }
   });
 }

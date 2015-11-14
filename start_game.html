@@ -1,9 +1,13 @@
 <template name="joinGame">
 	{{#if isGameCreated}}
-		<form id="join-game">
-	  		<input type="text" name="name" />
-	  		<input type="submit" value="Join" />
-	  	</form>
+		{{#if playerInSession}}
+		  <div class="alert alert-warning" role="alert">Wiating for other players!</div>
+		{{else}}
+			<form id="join-game">
+	  			<input type="text" name="name" />
+	  			<input type="submit" value="Join" />
+	  		</form>
+	  	{{/if}}
 	{{else}}
 		<button id="create-game">Create game!</button>
 	{{/if}}
