@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 
   Template.bet.helpers({
     isMyTurn: function() {
-      return Games.current().currentPlayer() === playerInSession();
+      return Games.current().currentPlayer() === Meteor.user().username;
     }
   });
 }

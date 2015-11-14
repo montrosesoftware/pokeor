@@ -3,8 +3,8 @@ if (Meteor.isClient) {
     isGameCreated: function () {
       return Games.current();
     },
-    playerInSession: function(){
-      return Session.get("player");
+    playerJoined: function(){
+      return _.contains(Games.current().players, Meteor.user().username);
     }
   });
 
@@ -15,12 +15,9 @@ if (Meteor.isClient) {
         createdAt: new Date()
       });
     },
-    'submit #join-game': function (event) {
-      event.preventDefault();
+    'click #join-game': function (event) {
       var game = Games.current();
-      var name = event.target.name.value;
-      game.addPlayer(name);
-      Session.set("player", name);
+      game.addPlayer(Meteor.user().username);
     }
   });
 
@@ -37,6 +34,7 @@ if (Meteor.isClient) {
     }
     return cards;
   }
+  DECK = generateDeck();
 }
 DECK = generateDeck();
 
