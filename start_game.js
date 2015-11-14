@@ -3,14 +3,14 @@ if (Meteor.isClient) {
 console.log("hello world");
 
   Template.joinGame.helpers({
-    isGameStarted: function () {
+    isGameCreated: function () {
       console.log(Games.findOne({isCreated:true}));
-      return Games.findOne({isCreated:true})
+      return Games.findOne({isCreated:true});
     }
   });
 
   Template.joinGame.events({
-    'click #start-game': function () {
+    'click #create-game': function () {
       Games.insert({
         isCreated:true, 
         createdAt: new Date()

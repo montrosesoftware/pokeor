@@ -6,8 +6,10 @@ Games.helpers({
   },
   addPlayer: function(name) {
     Games.update({_id:this._id}, {$addToSet: {players: name}});
+    this.tryStartGame();
   },
   init: function() {
+  	console.log("init");
     Rounds.insert({
       gameId: this._id,
       dealer: this.players[0],
@@ -20,6 +22,12 @@ Games.helpers({
         [{figure: 14, color: 4}, {figure: 2, color: 4}]
       ]
     });
-  }
+  },
+
+tryStartGame: function(){
+	if(this.players.length >= 4){
+		this.init();
+	}
+}
 });
 
