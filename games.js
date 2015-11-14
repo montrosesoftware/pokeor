@@ -15,6 +15,16 @@ DECK = generateDeck();
 
 Games = new Mongo.Collection('games');
 
+if (Meteor.isServer) {
+  Meteor.publish("games", function() {
+    return Games.find();
+  });
+}
+
+if (Meteor.isClient) {
+  Meteor.subscribe("games");
+}
+
 Games.helpers({
   currentRound: function() {
     return Rounds.findOne(this.currentRoundId);

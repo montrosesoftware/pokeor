@@ -1,5 +1,15 @@
 Rounds = new Mongo.Collection('rounds');
 
+if (Meteor.isServer) {
+  Meteor.publish("rounds", function() {
+    return Rounds.find();
+  });
+}
+
+if (Meteor.isClient) {
+  Meteor.subscribe("rounds");
+}
+
 Rounds.helpers({
   game: function() {
     return Games.findOne(this.gameId);
@@ -22,14 +32,14 @@ Rounds.helpers({
   	players.forEach(function(player){
   		var hand = that.getCards(2);
   		hands.push({player: player, hand: hand});
-  	})
+  	});
   	return hands;
   },
   shiftCard: function(){
   	var card = this.shuffledDeck.shift();
   	Rounds.update({_id:this._id}, {
   		$set:{ shuffledDeck: this.shuffledDeck }
-  	})
+  	});
   },
 
   zeroDeal: function (players){
@@ -87,7 +97,7 @@ Rounds.helpers({
 
   	switch(dealNum) {
     case 0:
-		this.zeroDeal();        
+		this.zeroDeal();
         break;
     case 1:
         this.firstDeal();
@@ -97,7 +107,7 @@ Rounds.helpers({
         break;
     case 3:
         this.thirdDeal();
-        break;    
+        break;
     default:
         console.log("To many deals!");
 	}
