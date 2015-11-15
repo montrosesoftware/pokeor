@@ -1,9 +1,4 @@
 <template name="game">
-  {{> cards}}
-  <div>
-    <span>Logged in as:</span>
-    <span>{{ currentUser.username }}</span>
-  </div>
   <div>
     <span>All players:</span>
     <span>{{ allPlayers }}</span>
@@ -11,6 +6,9 @@
   <div>
     <span>Current turn:</span>
     <span>{{ currentPlayer }}</span>
+  </div>
+  <div class="jumbotron">
+    {{> cards}}
   </div>
   {{> bet}}
 </template>

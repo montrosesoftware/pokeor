@@ -4,7 +4,10 @@
 
 <body>
   <div class="container">
-    {{> loginButtons}}
+  <div class="row">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">{{> loginButtons}}</div>
+  </div>
     {{#if currentUser}}
       {{#if Template.subscriptionsReady}}
         {{#unless isGameStarted}}
