@@ -27,7 +27,23 @@ Meteor.methods({
     if (!currentRound) {
       throw new Meteor.Error("no round started");
     }
-    currentRound().check(Meteor.user.username);
+    currentRound.bet(Meteor.user().username, 0);
+  },
+  bet: function(amount) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+    if (!Games.current()) {
+      throw new Meteor.Error("no game started");
+    }
+
+    var currentRound = Games.current().currentRound();
+    if (!currentRound) {
+      throw new Meteor.Error("no round started");
+    }
+
+    currentRound.bet(Meteor.user().username, parseInt(amount));
   }
 });
 
@@ -40,14 +56,30 @@ if (Meteor.isClient) {
       if(Games.current().currentRound()){
         return Games.current().currentRound().isPlaying(Meteor.user().username);
       }
+    },
+    canCheck: function(){
+      if (!Meteor.userId()) {
+        throw new Meteor.Error("not-authorized");
+      }
+
+      if (!Games.current()) {
+        throw new Meteor.Error("no game started");
+      }
+      var currentRound = Games.current().currentRound();
+      if (!currentRound) {
+        throw new Meteor.Error("no round started");
+      }
+      return currentRound.currentDeal().highestBet == 0; 
     }
   });
 
   Template.bet.events({
-    "submit .place-bet": function(event){
+    "submit #place-bet": function(event){
       event.preventDefault();
-      var amount = event.target.betAmount.value;
-      event.target.betAmount = "";
+      console.log("In Bet");
+      var amount = event.target.amount.value;
+      Meteor.call("bet", amount);
+      event.target.amount = "";
     },
     "click .fold" : function(event){
       event.preventDefault()

@@ -28,12 +28,7 @@ Rounds.helpers({
   },
   allPlayerCards: function(){
     var players = Games.current().getPlayers();
-    console.log(players);
-
-    var hands = Games.current().currentRound().hands;
-    console.log(hands);
-
-    
+    var hands = Games.current().currentRound().hands;  
   },
   getHands: function(players){
   	var hands = [];
@@ -51,6 +46,18 @@ Rounds.helpers({
   	});
   	return card;
   },
+  bet: function(player, amount){
+    var dealNum = this.deals.length - 1;
+    var object = {}
+    object["deals."+ dealNum + ".highestBet"] = amount;
+    var pot = this.pot + amount;
+    Rounds.update({_id:this._id}, {
+      $set:object,
+      $set: {pot:pot}
+    })
+    console.log("Playa: " + player);
+    this.moveToNextPlayer(player);
+  },
   fold: function(player){
     var hands = this.hands;
     hands = _.reject(hands, function(hand){
@@ -62,10 +69,17 @@ Rounds.helpers({
     Rounds.update({_id:this._id}, {
       $set:{hands: hands}
     }, function(){
-      Rounds.update({_id:id}, {
-        $set:{"deals.0.currentPlayer": that.nextPlayer(player)}
-      });
+      that.moveToNextPlayer(player);
     }); 
+  },
+  moveToNextPlayer: function(player){
+    var dealNum = this.deals.length - 1;
+    console.log(dealNum);
+    var object = {};
+    object["deals." + dealNum + ".currentPlayer"] = this.nextPlayer(player);
+    Rounds.update({_id:this._id}, {
+      $set: object
+    });
   },
   zeroDeal: function (players){
   	var hands = this.getHands(players);
@@ -75,7 +89,8 @@ Rounds.helpers({
         deals: {
           cards: [],
           bets: [],
-          currentPlayer: this.nextPlayer(this.dealer)
+          currentPlayer: this.nextPlayer(this.dealer),
+          highestBet: 0
         }
       }
     });
@@ -87,7 +102,8 @@ Rounds.helpers({
         deals: {
           cards: this.getCards(3),
           bets: [],
-          currentPlayer: this.nextPlayer(this.dealer)
+          currentPlayer: this.nextPlayer(this.dealer),
+          highestBet: 0
         }
       }
     });
@@ -99,7 +115,8 @@ Rounds.helpers({
         deals: {
           cards: this.getCards(1),
           bets: [],
-          currentPlayer: this.nextPlayer(this.dealer)
+          currentPlayer: this.nextPlayer(this.dealer),
+          highestBet: 0
         }
       }
     });
@@ -111,14 +128,14 @@ Rounds.helpers({
         deals: {
           cards: this.getCards(1),
           bets: [],
-          currentPlayer: this.nextPlayer(this.dealer)
+          currentPlayer: this.nextPlayer(this.dealer),
+          highestBet: 0
         }
       }
     });
   },
   nextDeal: function() {
   	var dealNum = this.deals.length;
-
   	switch(dealNum) {
     case 0:
 		this.zeroDeal();

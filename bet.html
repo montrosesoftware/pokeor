@@ -6,11 +6,11 @@
 	        <div class="form-group">
 		        <h3>Your Move!</h3>
 		        <div class="col-xs-3">
-		      		<input type="text" class="form-control" name="betAmount" placeholder="BTC"/>
+		      		<input type="text" class="form-control" name="amount" placeholder="BTC"/>
 		      	</div>
 		      	<input type="submit" value="Bet" class="btn btn-success"/>
 		      	<button class="btn btn-danger fold">Fold</button>
-		        <button class="btn btn-warning check">check</button>
+		        <button class="btn btn-warning check" disabled="{{#unless canCheck}}disabled{{/unless}}">check</button>
 	        </div>
 	      </form>
 	    {{else}}
