@@ -42,7 +42,22 @@ Rounds.helpers({
   	});
   	return card;
   },
-
+  fold: function(player){
+    var hands = this.hands;
+    hands = _.reject(hands, function(hand){
+      return hand.player == player;
+    });
+    console.log(hands);
+    var id = this._id;
+    var that = this;
+    Rounds.update({_id:this._id}, {
+      $set:{hands: hands}
+    }, function(){
+      Rounds.update({_id:id}, {
+        $set:{"deals.0.currentPlayer": that.nextPlayer(player)}
+      });
+    }); 
+  },
   zeroDeal: function (players){
   	var hands = this.getHands(players);
   	Rounds.update({_id:this._id}, {
@@ -82,7 +97,6 @@ Rounds.helpers({
   },
 
   thirdDeal: function (){
-  	console.log("3deal");
   	Rounds.update({_id:this._id}, {
       $push: {
         deals: {
@@ -93,7 +107,6 @@ Rounds.helpers({
       }
     });
   },
-
   nextDeal: function() {
   	var dealNum = this.deals.length;
 
@@ -111,12 +124,23 @@ Rounds.helpers({
         this.thirdDeal();
         break;
     default:
-        console.log("To many deals!");
+        console.log("Too many deals!");
 	}
   },
 
   nextPlayer: function(player) {
     var gamePlayers = this.game().players;
     return gamePlayers[(gamePlayers.indexOf(player) + 1) % gamePlayers.length];
+  },
+  isPlaying: function(player){
+    var found = _.find(this.hands, function(hand) {
+      return hand.player == player;
+    });
+    return found? true: false;
   }
 });
+
+
+
+
+
