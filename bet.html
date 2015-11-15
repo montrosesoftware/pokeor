@@ -1,0 +1,23 @@
+<template name="bet">
+  <div id="bet">
+    {{#if playing}}
+	    {{#if isMyTurn}}
+	      <form id="place-bet">
+	        <div class="form-group">
+		        <h3>Your Move!</h3>
+		        <div class="col-xs-3">
+		      		<input type="text" class="form-control" name="betAmount" placeholder="BTC"/>
+		      	</div>
+		      	<input type="submit" value="Bet" class="btn btn-success"/>
+		      	<button class="btn btn-danger fold">Fold</button>
+		        <button class="btn btn-warning check">check</button>
+	        </div>
+	      </form>
+	    {{else}}
+	      <span>Wait for your turn.</span>
+	    {{/if}}
+    {{else}}
+    	<h3 class="alert alert-info"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> You Folded! Wait for others</h3>
+    {{/if}}
+  </div>
+</template>

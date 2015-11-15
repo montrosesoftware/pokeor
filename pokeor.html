@@ -3,19 +3,21 @@
 </head>
 
 <body>
-  {{> loginButtons}}
-  {{#if currentUser}}
-    {{#if Template.subscriptionsReady}}
-      {{#unless isGameStarted}}
-        <h1>Welcome to Pokeor!</h1>
-        {{> joinGame}}
+  <div class="container">
+    {{> loginButtons}}
+    {{#if currentUser}}
+      {{#if Template.subscriptionsReady}}
+        {{#unless isGameStarted}}
+          <h1>Welcome to Pokeor!</h1>
+          {{> joinGame}}
+        {{else}}
+          {{> game}}
+        {{/unless}}
       {{else}}
-        {{> game}}
-      {{/unless}}
+        Loading...
+      {{/if}}
     {{else}}
-      Loading...
+      <h1>Welcome to Pokeor! Please sign in.</h1>
     {{/if}}
-  {{else}}
-    <h1>Welcome to Pokeor! Please sign in.</h1>
-  {{/if}}
+  </div>
 </body>

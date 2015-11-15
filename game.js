@@ -9,10 +9,4 @@ if (Meteor.isClient) {
       return Games.current().currentPlayer();
     }
   });
-
-  Template.bet.helpers({
-    isMyTurn: function() {
-      return Games.current().currentPlayer() === Meteor.user().username;
-    }
-  });
 }

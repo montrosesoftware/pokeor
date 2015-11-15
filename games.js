@@ -80,6 +80,10 @@ Games.helpers({
 _.extend(Games, {
   current: function() {
     return Games.findOne({isCreated:true});
+  },
+  currentRound : function() {
+    var round = Games.current().currentRound();
+    return round;
   }
 });
 
