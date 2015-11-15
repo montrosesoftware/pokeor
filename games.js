@@ -71,6 +71,9 @@ Games.helpers({
     } else {
       return null;
     }
+  },
+  endRound: function() {
+    console.log("endRound");
   }
 });
 

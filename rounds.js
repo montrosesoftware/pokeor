@@ -26,6 +26,15 @@ Rounds.helpers({
   	}
   	return cards;
   },
+  allPlayerCards: function(){
+    var players = Games.current().getPlayers();
+    console.log(players);
+
+    var hands = Games.current().currentRound().hands;
+    console.log(hands);
+
+    
+  },
   getHands: function(players){
   	var hands = [];
   	var that = this;
