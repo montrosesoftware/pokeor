@@ -136,7 +136,9 @@ Rounds.helpers({
         console.log("Too many deals!");
 	}
   },
-
+  currentDeal: function() {
+    return _.last(this.deals);
+  },
   nextPlayer: function(player) {
     var gamePlayers = this.game().players;
     return gamePlayers[(gamePlayers.indexOf(player) + 1) % gamePlayers.length];

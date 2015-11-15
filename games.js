@@ -43,7 +43,8 @@ Games.helpers({
       dealer: this.players[0],
       shuffledDeck: shuffledDeck,
       hands: [],
-      deals: []
+      deals: [],
+      pot: 0
     });
 
     var id = this._id;
